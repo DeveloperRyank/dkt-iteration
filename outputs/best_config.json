@@ -1,0 +1,11 @@
+{
+  "config": {
+    "hidden_size": 200,
+    "dropout": 0.2,
+    "lr": 0.003
+  },
+  "val_auc": 0.722353658054854,
+  "test_auc": 0.7178112341599283,
+  "test_acc": 0.7099410961242957,
+  "final_epochs": 1
+}

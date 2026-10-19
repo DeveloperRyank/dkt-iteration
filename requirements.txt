@@ -1,0 +1,11 @@
+# CPU build of torch for Python 3.14: pip install --index-url https://download.pytorch.org/whl/cpu torch
+# The extra index below makes Streamlit Community Cloud (Linux) use CPU wheels too.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch>=2.5
+numpy
+pandas
+scikit-learn
+matplotlib
+altair
+streamlit>=1.57
+pytest

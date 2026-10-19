@@ -1,0 +1,86 @@
+students: train=2505 val=358 test=716 (test untouched during search)
+epoch  1/8  train loss 0.6147
+epoch  2/8  train loss 0.5697
+epoch  3/8  train loss 0.5588
+epoch  4/8  train loss 0.5543
+epoch  5/8  train loss 0.5523
+epoch  6/8  train loss 0.5503
+epoch  7/8  train loss 0.5471
+epoch  8/8  train loss 0.5449
+trial 1/8: hidden=200 lr=0.003 dropout=0.2 -> val AUC=0.7525 (416s)
+epoch  1/8  train loss 0.6864
+epoch  2/8  train loss 0.6547
+epoch  3/8  train loss 0.6265
+epoch  4/8  train loss 0.6111
+epoch  5/8  train loss 0.6042
+epoch  6/8  train loss 0.6004
+epoch  7/8  train loss 0.5980
+epoch  8/8  train loss 0.5939
+trial 2/8: hidden=32 lr=0.0003 dropout=0.5 -> val AUC=0.7186 (113s)
+epoch  1/8  train loss 0.6855
+epoch  2/8  train loss 0.6482
+epoch  3/8  train loss 0.6209
+epoch  4/8  train loss 0.6056
+epoch  5/8  train loss 0.5992
+epoch  6/8  train loss 0.5948
+epoch  7/8  train loss 0.5923
+epoch  8/8  train loss 0.5886
+trial 3/8: hidden=32 lr=0.0003 dropout=0.2 -> val AUC=0.7172 (141s)
+epoch  1/8  train loss 0.6173
+epoch  2/8  train loss 0.5735
+epoch  3/8  train loss 0.5639
+epoch  4/8  train loss 0.5574
+epoch  5/8  train loss 0.5539
+epoch  6/8  train loss 0.5524
+epoch  7/8  train loss 0.5526
+epoch  8/8  train loss 0.5487
+trial 4/8: hidden=64 lr=0.003 dropout=0.2 -> val AUC=0.7517 (151s)
+epoch  1/8  train loss 0.6450
+epoch  2/8  train loss 0.5981
+epoch  3/8  train loss 0.5886
+epoch  4/8  train loss 0.5761
+epoch  5/8  train loss 0.5696
+epoch  6/8  train loss 0.5652
+epoch  7/8  train loss 0.5642
+epoch  8/8  train loss 0.5596
+trial 5/8: hidden=64 lr=0.001 dropout=0.2 -> val AUC=0.7415 (112s)
+epoch  1/8  train loss 0.6262
+epoch  2/8  train loss 0.5926
+epoch  3/8  train loss 0.5755
+epoch  4/8  train loss 0.5673
+epoch  5/8  train loss 0.5620
+epoch  6/8  train loss 0.5604
+epoch  7/8  train loss 0.5569
+epoch  8/8  train loss 0.5542
+trial 6/8: hidden=200 lr=0.001 dropout=0.2 -> val AUC=0.7440 (380s)
+epoch  1/8  train loss 0.6587
+epoch  2/8  train loss 0.6091
+epoch  3/8  train loss 0.5954
+epoch  4/8  train loss 0.5862
+epoch  5/8  train loss 0.5810
+epoch  6/8  train loss 0.5765
+epoch  7/8  train loss 0.5740
+epoch  8/8  train loss 0.5698
+trial 7/8: hidden=32 lr=0.001 dropout=0.5 -> val AUC=0.7363 (70s)
+epoch  1/8  train loss 0.6276
+epoch  2/8  train loss 0.5889
+epoch  3/8  train loss 0.5713
+epoch  4/8  train loss 0.5648
+epoch  5/8  train loss 0.5618
+epoch  6/8  train loss 0.5609
+epoch  7/8  train loss 0.5581
+epoch  8/8  train loss 0.5552
+trial 8/8: hidden=200 lr=0.001 dropout=0.5 -> val AUC=0.7441 (343s)
+
+ranking by validation AUC:
+  val AUC=0.7525  hidden=200 lr=0.003 dropout=0.2
+  val AUC=0.7517  hidden=64 lr=0.003 dropout=0.2
+  val AUC=0.7441  hidden=200 lr=0.001 dropout=0.5
+  val AUC=0.7440  hidden=200 lr=0.001 dropout=0.2
+  val AUC=0.7415  hidden=64 lr=0.001 dropout=0.2
+  val AUC=0.7363  hidden=32 lr=0.001 dropout=0.5
+  val AUC=0.7186  hidden=32 lr=0.0003 dropout=0.5
+  val AUC=0.7172  hidden=32 lr=0.0003 dropout=0.2
+
+retraining best config on train+val for 20 epochs...
+epoch  1/20  train loss 0.6064

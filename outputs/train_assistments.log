@@ -1,0 +1,45 @@
+preprocessing stats:
+  unique_interactions: 274590
+  dropped_bad_correct: 0
+  dropped_blank_skill: 76119
+  dropped_duplicate_skill_rows: 51047
+  skills_total: 101
+  skills_kept: 56
+  interactions_after_skill_filter: 260447
+  students_total: 4096
+  students_dropped_short: 517
+  students_kept: 3579
+  interactions_kept: 259246
+  sequence lengths: min=5 median=25 p90=167 max=999
+  overall accuracy: 0.6627 over 259246 interactions
+  kept skills: ['Absolute Value', 'Addition Whole Numbers', 'Addition and Subtraction Fractions', 'Addition and Subtraction Integers', 'Addition and Subtraction Positive Decimals', 'Area Circle', 'Area Irregular Figure', 'Area Trapezoid', 'Box and Whisker', 'Calculations with Similar Figures', 'Circle Graph', 'Circumference', 'Complementary and Supplementary Angles', 'Conversion of Fraction Decimals Percents', 'Counting Methods', 'Divisibility Rules', 'Division Fractions', 'Effect of Changing Dimensions of a Shape Prportionally', 'Equation Solving More Than Two Steps', 'Equation Solving Two or Fewer Steps', 'Estimation', 'Exponents', 'Finding Percents', 'Histogram as Table or Graph', 'Interior Angles Figures with More than 3 Sides', 'Least Common Multiple', 'Median', 'Multiplication Fractions', 'Multiplication and Division Integers', 'Multiplication and Division Positive Decimals', 'Number Line', 'Order of Operations +,-,/,* () positive reals', 'Order of Operations All', 'Ordering Fractions', 'Ordering Integers', 'Ordering Positive Decimals', 'Pattern Finding', 'Percent Of', 'Probability of Two Distinct Events', 'Probability of a Single Event', 'Proportion', 'Pythagorean Theorem', 'Scatter Plot', 'Scientific Notation', 'Solving for a variable', 'Square Root', 'Stem and Leaf Plot', 'Subtraction Whole Numbers', 'Surface Area Rectangular Prism', 'Table', 'Unit Conversion Within a System', 'Unit Rate', 'Venn Diagram', 'Volume Cylinder', 'Volume Sphere', 'Write Linear Equation from Graph']
+assistments: 2863 train / 716 test students, 56 skills
+epoch  1/20  train loss 0.6404
+epoch  2/20  train loss 0.5931
+epoch  3/20  train loss 0.5796
+epoch  4/20  train loss 0.5694
+epoch  5/20  train loss 0.5647
+epoch  6/20  train loss 0.5610
+epoch  7/20  train loss 0.5596
+epoch  8/20  train loss 0.5583
+epoch  9/20  train loss 0.5541
+epoch 10/20  train loss 0.5527
+epoch 11/20  train loss 0.5523
+epoch 12/20  train loss 0.5486
+epoch 13/20  train loss 0.5502
+epoch 14/20  train loss 0.5487
+epoch 15/20  train loss 0.5471
+epoch 16/20  train loss 0.5475
+epoch 17/20  train loss 0.5447
+epoch 18/20  train loss 0.5450
+epoch 19/20  train loss 0.5450
+epoch 20/20  train loss 0.5437
+
+test results:
+DKT (first-obs excluded)     n=  46856  AUC=0.7508  Acc=0.7301
+DKT (all pairs)              n=  52101  AUC=0.7497  Acc=0.7257
+per-skill rate baseline      n=  46856  AUC=0.6065  Acc=0.6591
+random guess                 n=  46856  AUC=0.5009  Acc=0.5008
+
+loss decreased: 0.6404 -> 0.5437
+saved: outputs/loss_assistments.png, outputs/roc_assistments.png
