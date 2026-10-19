@@ -1,0 +1,32 @@
+loaded cached processed data: data/processed/assistments2009.json.s1000.l5.gz
+assistments: 2863 train / 716 test students, 56 skills
+epoch  1/20  train loss 0.6084
+epoch  2/20  train loss 0.5706
+epoch  3/20  train loss 0.5591
+epoch  4/20  train loss 0.5526
+epoch  5/20  train loss 0.5507
+epoch  6/20  train loss 0.5454
+epoch  7/20  train loss 0.5443
+epoch  8/20  train loss 0.5406
+epoch  9/20  train loss 0.5404
+epoch 10/20  train loss 0.5366
+epoch 11/20  train loss 0.5345
+epoch 12/20  train loss 0.5333
+epoch 13/20  train loss 0.5287
+epoch 14/20  train loss 0.5280
+epoch 15/20  train loss 0.5235
+epoch 16/20  train loss 0.5221
+epoch 17/20  train loss 0.5165
+epoch 18/20  train loss 0.5171
+epoch 19/20  train loss 0.5111
+epoch 20/20  train loss 0.5077
+
+test results:
+DKT (first-obs excluded)     n=  46856  AUC=0.7520  Acc=0.7301
+DKT (all pairs)              n=  52101  AUC=0.7510  Acc=0.7255
+per-skill rate baseline      n=  46856  AUC=0.6065  Acc=0.6591
+random guess                 n=  46856  AUC=0.5009  Acc=0.5008
+
+loss decreased: 0.6084 -> 0.5077
+saved: outputs/loss_assistments.png, outputs/roc_assistments.png
+checkpoint saved to outputs/model_assistments.pt

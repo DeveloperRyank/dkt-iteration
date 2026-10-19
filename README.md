@@ -80,6 +80,19 @@ train loss 0.640 -> 0.544:
 The directional claim replicates: per-student history adds predictive signal
 beyond static per-skill rates (0.751 vs 0.607 AUC).
 
+### Hyperparameter tuning (`python tune.py`)
+
+8-trial random search (hidden 64–200, lr 1e-3–1e-2, dropout 0.2–0.5) ranked on
+a validation split (12.5% of train, seed 43); the test split was untouched
+until one final eval per config. Winner: hidden 200, lr 3e-3, dropout 0.2.
+Retrained 20 epochs, it scores test AUC **0.752** (loss 0.608 -> 0.508) —
+statistically indistinguishable from the untuned hidden 64 config's 0.751.
+
+Honest conclusion: **tuning did not meaningfully help here.** The gap to the
+baseline is a property of the data and task, not of the hyperparameters.
+The shipped checkpoint (`outputs/model_assistments.pt`, used by the demo) is
+the tuned hidden-200 model.
+
 ## How it works: the important code and tensor shapes
 
 `B` = batch, `L` = sequence length, `S` = num_skills.
@@ -115,8 +128,10 @@ Three ideas worth pausing on:
   wins), losing secondary-skill signal.
 - One input encoding (skill one-hot ⊕ correct bit); the paper also tried a
   dual one-hot variant.
-- 1-layer LSTM, hidden 64, dropout 0.2, Adam 1e-3, 20 epochs, no tuning; the
-  paper used hidden 50+ with tuned regularization and a Bayesian-optimization
+- 1-layer LSTM; headline run uses hidden 64, dropout 0.2, Adam 1e-3, 20
+  epochs, no tuning (the shipped demo model is a tuned hidden-200 variant —
+  see the tuning section above); the paper used hidden 50+ with tuned
+  regularization and a Bayesian-optimization
   hyperparameter search.
 - Padded steps are fed to the LSTM as all-zero inputs (masked out of the loss
   only). Sequences here are short enough that this is a minor simplification.

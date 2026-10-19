@@ -84,3 +84,26 @@ ranking by validation AUC:
 
 retraining best config on train+val for 20 epochs...
 epoch  1/20  train loss 0.6064
+epoch  2/20  train loss 0.5657
+epoch  3/20  train loss 0.5550
+epoch  4/20  train loss 0.5523
+epoch  5/20  train loss 0.5497
+epoch  6/20  train loss 0.5459
+epoch  7/20  train loss 0.5442
+epoch  8/20  train loss 0.5396
+epoch  9/20  train loss 0.5397
+epoch 10/20  train loss 0.5363
+epoch 11/20  train loss 0.5334
+epoch 12/20  train loss 0.5315
+epoch 13/20  train loss 0.5306
+epoch 14/20  train loss 0.5265
+epoch 15/20  train loss 0.5243
+epoch 16/20  train loss 0.5236
+epoch 17/20  train loss 0.5193
+epoch 18/20  train loss 0.5165
+epoch 19/20  train loss 0.5110
+epoch 20/20  train loss 0.5095
+
+FINAL (single test evaluation):
+  test AUC=0.7488  Acc=0.7281  n=46856
+saved outputs/best_config.json
