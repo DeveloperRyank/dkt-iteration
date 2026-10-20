@@ -21,8 +21,8 @@ comp = load_comparison()
 auc = ckpt.get("test_auc", float("nan"))
 base_row = next((m for m in (comp or {}).get("models", [])
                  if m["name"].startswith("per-skill")), None)
-base_auc = base_row["auc"] if base_row else 0.6065
-n_pairs = comp["n_pairs"] if comp else "?"
+base_auc = base_row["auc"] if base_row else float("nan")
+n_pairs = comp["n_pairs"] if comp else None
 
 c1, c2, c3, c4 = st.columns(4)
 c1.metric("DKT test ROC-AUC", f"{auc:.3f}",
@@ -34,7 +34,11 @@ c2.metric("Simple baseline AUC", f"{base_auc:.3f}", delta=None,
 c3.metric("Signal from history", f"+{auc - base_auc:.3f}",
           help="How much of the prediction comes from THIS student's "
                "recent answers rather than population averages.")
-c4.metric("Held-out test pairs", f"{n_pairs:,}" if isinstance(n_pairs, int) else n_pairs)
+c4.metric("Held-out test pairs", f"{n_pairs:,}" if n_pairs else "run compare.py")
+
+st.info("This page is the summary. To get your hands dirty, open "
+        "**Student Simulator** in the sidebar: press a button, and the model "
+        "reacts to what you did.", icon=":material/lightbulb:")
 
 st.subheader("How this works (2-minute version)")
 st.markdown(

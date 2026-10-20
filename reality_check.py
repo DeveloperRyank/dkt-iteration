@@ -58,18 +58,26 @@ def collect_with_positions(model, sequences):
     return {k: np.array(v) for k, v in out.items()}
 
 
-def position_band_report(m):
-    """Metrics per relative-position band over eligible pairs."""
+def position_band_report(m, n_bands=3):
+    """Metrics per relative-position band over eligible pairs.
+
+    n_bands=3 gives the early / middle / late thirds; other values split the
+    sequence into that many equal relative-position bands.
+    """
     keep = m["seen"]
     frac = m["pos"][keep] / m["len"][keep]
-    bands = {"early (first third)": frac < 1 / 3,
-             "middle third": (frac >= 1 / 3) & (frac < 2 / 3),
-             "late (last third)": frac >= 2 / 3}
     rows = []
-    for name, sel in bands.items():
+    for i in range(n_bands):
+        lo, hi = i / n_bands, (i + 1) / n_bands
+        sel = (frac >= lo) & (frac < hi if hi < 1.0 else frac <= hi)
         if sel.sum() == 0:
             continue
-        rows.append(full_report(name, m["probs"][keep][sel], m["labels"][keep][sel]))
+        name = (f"band {i + 1}/{n_bands} ({lo:.0%}-{hi:.0%} of their log)"
+                if n_bands != 3 else
+                ["early (first third)", "middle third",
+                 "late (last third)"][i])
+        rows.append(full_report(name, m["probs"][keep][sel],
+                                m["labels"][keep][sel]))
     return rows
 
 

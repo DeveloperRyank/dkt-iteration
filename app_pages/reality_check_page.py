@@ -26,23 +26,45 @@ students = bundle["test_students"]
 
 
 @st.cache_data(show_spinner="Scoring every held-out pair...")
-def band_report():
+def band_report(n_bands):
     model, _ = load_model()
     m = collect_with_positions(model, students)
-    return position_band_report(m)
+    return position_band_report(m, n_bands)
 
 
 st.subheader("1. Sequence-position proxy (real computed numbers)")
 st.caption(
-    "Predictions grouped by where they fall in the student's logged "
-    "sequence. Later positions come later in the school year and have more "
-    "history behind them — suggestive of retention, NOT a controlled "
-    "delayed-assessment study."
+    "Split each student's logged history into bands by how far through it a "
+    "question was. Later questions come later in the student's time on the "
+    "site and have more history behind them, so a score that holds up (or "
+    "improves) in the last band is *suggestive* of retention. It is NOT a "
+    "controlled delayed-retention study, and it never will be on this "
+    "dataset."
 )
-rows = band_report()
+n_bands = st.slider("Cut each student's history into how many bands?",
+                    2, 8, 3,
+                    help="More bands means fewer questions per band, so the "
+                         "per-band numbers get noisier.")
+rows = band_report(n_bands)
 st.dataframe(pd.DataFrame(rows)[["name", "n", "auc", "acc", "log_loss",
                                  "brier", "ece"]].round(4),
              hide_index=True, width="stretch")
+aucs = [r["auc"] for r in rows]
+if len(rows) >= 2:
+    trend = aucs[-1] - aucs[0]
+    st.caption(
+        f"AUC goes from {aucs[0]:.3f} in the first band to {aucs[-1]:.3f} in "
+        f"the last ({trend:+.3f}). "
+        + ("Prediction holds up as history grows — consistent with the model "
+           "tracking something stable, but still not proof of durable "
+           "learning."
+           if trend > -0.02 else
+           "Prediction gets worse on later questions, so the model leans on "
+           "early-sequence patterns that stop applying.")
+    )
+    st.warning("`n` is the number of scored pairs in the band. A band with a "
+               "few hundred pairs and an AUC swing of 0.01 is noise, not a "
+               "finding.", icon=":material/warning:")
 
 st.subheader("2. Import delayed / transfer assessments")
 st.markdown(TEMPLATE_DOC)

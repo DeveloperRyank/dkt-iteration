@@ -1,0 +1,272 @@
+{
+  "protocol": "same eligible test pairs for all models (first observation of each skill excluded); student-level split seed 42; ASSISTments 2009-2010",
+  "n_pairs": 46856,
+  "models": [
+    {
+      "name": "DKT",
+      "n": 46856,
+      "auc": 0.7520292051653362,
+      "acc": 0.7301306129417791,
+      "log_loss": 0.5425283718413417,
+      "brier": 0.18192946021710332,
+      "ece": 0.018496009921742905,
+      "settings": {
+        "hidden_size": 200,
+        "dropout": 0.2,
+        "epochs": 20,
+        "lr": 0.003,
+        "batch_size": 32,
+        "seed": 42
+      },
+      "train_seconds": 1509.4,
+      "eval_seconds": 12.8
+    },
+    {
+      "name": "BKT (EM, per skill)",
+      "n": 46856,
+      "auc": 0.7232730938055956,
+      "acc": 0.7218072392009561,
+      "log_loss": 0.5631124264871363,
+      "brier": 0.18989704105901126,
+      "ece": 0.01171258265296861,
+      "settings": {
+        "em_iters_max": 100,
+        "em_tol": 1e-06,
+        "structure": "one HMM per skill"
+      },
+      "train_seconds": 65.1
+    },
+    {
+      "name": "per-skill rate baseline",
+      "n": 46856,
+      "auc": 0.60650691707624,
+      "acc": 0.6590831483694725,
+      "log_loss": 0.6256607972357618,
+      "brier": 0.21764088465379228,
+      "ece": 0.00969752551392108
+    },
+    {
+      "name": "random guess",
+      "n": 46856,
+      "auc": 0.5009092186128239,
+      "acc": 0.5007896534061806,
+      "log_loss": 0.9972563937179698,
+      "brier": 0.3323798206435718,
+      "ece": 0.27064175988037054
+    }
+  ],
+  "reliability": {
+    "DKT": [
+      {
+        "bin": "0.0-0.1",
+        "count": 1368,
+        "mean_predicted": 0.047336445467434936,
+        "observed_rate": 0.06944444444444445
+      },
+      {
+        "bin": "0.1-0.2",
+        "count": 1496,
+        "mean_predicted": 0.15223672597564478,
+        "observed_rate": 0.18382352941176472
+      },
+      {
+        "bin": "0.2-0.3",
+        "count": 1786,
+        "mean_predicted": 0.2536482215261406,
+        "observed_rate": 0.32306830907054873
+      },
+      {
+        "bin": "0.3-0.4",
+        "count": 2526,
+        "mean_predicted": 0.35366842521152514,
+        "observed_rate": 0.4065716547901821
+      },
+      {
+        "bin": "0.4-0.5",
+        "count": 3625,
+        "mean_predicted": 0.4536958244340173,
+        "observed_rate": 0.4877241379310345
+      },
+      {
+        "bin": "0.5-0.6",
+        "count": 5171,
+        "mean_predicted": 0.5535103271579724,
+        "observed_rate": 0.5762908528331078
+      },
+      {
+        "bin": "0.6-0.7",
+        "count": 7051,
+        "mean_predicted": 0.6524420555576909,
+        "observed_rate": 0.6608991632392568
+      },
+      {
+        "bin": "0.7-0.8",
+        "count": 9220,
+        "mean_predicted": 0.7523229596542433,
+        "observed_rate": 0.7532537960954447
+      },
+      {
+        "bin": "0.8-0.9",
+        "count": 9952,
+        "mean_predicted": 0.848754794537494,
+        "observed_rate": 0.8362138263665595
+      },
+      {
+        "bin": "0.9-1.0",
+        "count": 4661,
+        "mean_predicted": 0.9316373692129692,
+        "observed_rate": 0.9107487663591504
+      }
+    ],
+    "BKT (EM, per skill)": [
+      {
+        "bin": "0.1-0.2",
+        "count": 906,
+        "mean_predicted": 0.14969905192260488,
+        "observed_rate": 0.09933774834437085
+      },
+      {
+        "bin": "0.2-0.3",
+        "count": 1146,
+        "mean_predicted": 0.2391963243440434,
+        "observed_rate": 0.25218150087260033
+      },
+      {
+        "bin": "0.3-0.4",
+        "count": 2780,
+        "mean_predicted": 0.3633649220191858,
+        "observed_rate": 0.33093525179856115
+      },
+      {
+        "bin": "0.4-0.5",
+        "count": 4575,
+        "mean_predicted": 0.45503552385865836,
+        "observed_rate": 0.4242622950819672
+      },
+      {
+        "bin": "0.5-0.6",
+        "count": 5036,
+        "mean_predicted": 0.5526162020810873,
+        "observed_rate": 0.5500397140587768
+      },
+      {
+        "bin": "0.6-0.7",
+        "count": 5598,
+        "mean_predicted": 0.6586160467950336,
+        "observed_rate": 0.6702393712040015
+      },
+      {
+        "bin": "0.7-0.8",
+        "count": 15720,
+        "mean_predicted": 0.7595307416038058,
+        "observed_rate": 0.7537531806615776
+      },
+      {
+        "bin": "0.8-0.9",
+        "count": 9823,
+        "mean_predicted": 0.8318253192324091,
+        "observed_rate": 0.8243917336862465
+      },
+      {
+        "bin": "0.9-1.0",
+        "count": 1272,
+        "mean_predicted": 0.9194430172770034,
+        "observed_rate": 0.9316037735849056
+      }
+    ],
+    "per-skill rate baseline": [
+      {
+        "bin": "0.4-0.5",
+        "count": 1498,
+        "mean_predicted": 0.4700874424925424,
+        "observed_rate": 0.5040053404539386
+      },
+      {
+        "bin": "0.5-0.6",
+        "count": 10801,
+        "mean_predicted": 0.5671439274294391,
+        "observed_rate": 0.5633737616887325
+      },
+      {
+        "bin": "0.6-0.7",
+        "count": 19687,
+        "mean_predicted": 0.6619272699449303,
+        "observed_rate": 0.647533905623
+      },
+      {
+        "bin": "0.7-0.8",
+        "count": 11713,
+        "mean_predicted": 0.7513704560042569,
+        "observed_rate": 0.751216596943567
+      },
+      {
+        "bin": "0.8-0.9",
+        "count": 3157,
+        "mean_predicted": 0.818717887103275,
+        "observed_rate": 0.7941083306936966
+      }
+    ],
+    "random guess": [
+      {
+        "bin": "0.0-0.1",
+        "count": 4784,
+        "mean_predicted": 0.05058386619876699,
+        "observed_rate": 0.6655518394648829
+      },
+      {
+        "bin": "0.1-0.2",
+        "count": 4589,
+        "mean_predicted": 0.1500022937882472,
+        "observed_rate": 0.6556984092394857
+      },
+      {
+        "bin": "0.2-0.3",
+        "count": 4510,
+        "mean_predicted": 0.2506490035151698,
+        "observed_rate": 0.6572062084257206
+      },
+      {
+        "bin": "0.3-0.4",
+        "count": 4691,
+        "mean_predicted": 0.35069654594312216,
+        "observed_rate": 0.6629716478362823
+      },
+      {
+        "bin": "0.4-0.5",
+        "count": 4805,
+        "mean_predicted": 0.4497116861297532,
+        "observed_rate": 0.6528616024973986
+      },
+      {
+        "bin": "0.5-0.6",
+        "count": 4666,
+        "mean_predicted": 0.5500296715108794,
+        "observed_rate": 0.6534504929275611
+      },
+      {
+        "bin": "0.6-0.7",
+        "count": 4758,
+        "mean_predicted": 0.6507959179465518,
+        "observed_rate": 0.6586801176965111
+      },
+      {
+        "bin": "0.7-0.8",
+        "count": 4723,
+        "mean_predicted": 0.7499574113695142,
+        "observed_rate": 0.6627143764556426
+      },
+      {
+        "bin": "0.8-0.9",
+        "count": 4737,
+        "mean_predicted": 0.8492229421391247,
+        "observed_rate": 0.6567447751741609
+      },
+      {
+        "bin": "0.9-1.0",
+        "count": 4593,
+        "mean_predicted": 0.9505901789283875,
+        "observed_rate": 0.6675375571521881
+      }
+    ]
+  }
+}

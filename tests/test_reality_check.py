@@ -81,6 +81,6 @@ def test_position_bands_partition_eligible_pairs():
              "correct": list(np.random.default_rng(2).integers(0, 2, 30))}
             for _ in range(6)]
     m = collect_with_positions(model, seqs)
-    rows = position_band_report(m)
-    total = sum(r["n"] for r in rows)
-    assert total == int(m["seen"].sum())
+    for n_bands in (2, 3, 5, 8):
+        rows = position_band_report(m, n_bands)
+        assert sum(r["n"] for r in rows) == int(m["seen"].sum())

@@ -1,0 +1,9 @@
+2863 train / 716 test students, 56 skills
+BKT fitted per skill in 65.1s
+DKT                        n= 46856  AUC=0.7520  Acc=0.7301  LL=0.5425  Brier=0.1819  ECE=0.0185
+BKT (EM, per skill)        n= 46856  AUC=0.7233  Acc=0.7218  LL=0.5631  Brier=0.1899  ECE=0.0117
+per-skill rate baseline    n= 46856  AUC=0.6065  Acc=0.6591  LL=0.6257  Brier=0.2176  ECE=0.0097
+random guess               n= 46856  AUC=0.5009  Acc=0.5008  LL=0.9973  Brier=0.3324  ECE=0.2706
+wrote outputs/comparison.json
+wrote outputs/bkt_params.json
+bundle written: 716 test students, 52817 interactions, 56 skills, 52101 eval pairs

@@ -47,6 +47,26 @@ def load_comparison():
 
 
 @st.cache_data
+def load_eval_pairs():
+    """Flat held-out evaluation pairs (DKT + BKT probs, labels, skills, seen).
+
+    Precomputed in the bundle so comparison controls respond instantly.
+    Returns None for bundles exported before eval pairs existed.
+    """
+    bundle = load_bundle()
+    ep = bundle.get("eval_pairs")
+    if not ep:
+        return None
+    return {
+        "probs_dkt": np.array(ep["probs_dkt"], dtype=float),
+        "probs_bkt": np.array(ep["probs_bkt"], dtype=float),
+        "labels": np.array(ep["labels"], dtype=float),
+        "skills": np.array(ep["skills"]),
+        "seen": np.array(ep["seen"], dtype=bool),
+    }
+
+
+@st.cache_data
 def predict_sequence(student):
     """Causal per-step predictions for interactions 2..end (see demo docs)."""
     model, _ = load_model()
@@ -68,9 +88,22 @@ def skill_beliefs(student):
     question on each skill came next -- a model estimate, not a measurement
     of the student's true knowledge.
     """
-    model, _ = load_model()
-    batch = collate_fn([{"skills": student["skills"],
-                         "correct": student["correct"]}])
+    return beliefs_upto(student["skills"], student["correct"],
+                        len(student["skills"]))
+
+
+@st.cache_data
+def beliefs_upto(skills, correct, step):
+    """Per-skill model beliefs after the first `step` interactions.
+
+    step=0 means no history at all: the model honestly starts at 0.5 for
+    every skill instead of guessing.
+    """
+    model, ckpt = load_model()
+    if step <= 0:
+        return np.full(ckpt["num_skills"], 0.5)
+    batch = collate_fn([{"skills": list(skills[:step]),
+                         "correct": list(correct[:step])}])
     with torch.no_grad():
         logits = model(**batch)
     return torch.sigmoid(logits)[0, -1].numpy()
