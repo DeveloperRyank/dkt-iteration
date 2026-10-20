@@ -6,6 +6,7 @@ Usage:
 """
 
 import argparse
+import time
 
 import numpy as np
 import torch
@@ -79,7 +80,9 @@ def main():
     model = DKT(data["num_skills"], cfg.hidden_size, cfg.dropout)
     train_loader = make_loader(train_seqs, cfg.batch_size, shuffle=True)
     test_loader = make_loader(test_seqs, cfg.batch_size, shuffle=False)
+    t0 = time.perf_counter()
     history = train_model(model, train_loader, cfg)
+    train_seconds = round(time.perf_counter() - t0, 1)
 
     probs, labels, skills, seen = collect_predictions(model, test_loader)
     keep = seen  # protocol: exclude each skill's first observation
@@ -114,6 +117,10 @@ def main():
             "epochs": cfg.epochs,
             "data": args.data,
             "test_auc": rows[0]["auc"],
+            "lr": cfg.lr,
+            "batch_size": cfg.batch_size,
+            "seed": cfg.seed,
+            "train_seconds": train_seconds,
         }, args.save)
         print(f"checkpoint saved to {args.save}")
 

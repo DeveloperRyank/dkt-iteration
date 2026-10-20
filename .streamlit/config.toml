@@ -3,3 +3,11 @@ headless = true
 
 [browser]
 gatherUsageStats = false
+
+[theme]
+base = "dark"
+primaryColor = "#2dd4bf"          # teal accents
+secondaryAccentColor = "#f59e0b"  # amber for uncertainty/flags
+backgroundColor = "#1e232b"       # dark charcoal
+secondaryBackgroundColor = "#2a3138"
+textColor = "#f5f7fa"

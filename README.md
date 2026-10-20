@@ -136,34 +136,59 @@ Three ideas worth pausing on:
 - Padded steps are fed to the LSTM as all-zero inputs (masked out of the loss
   only). Sequences here are short enough that this is a minor simplification.
 
-## Browser demo (Streamlit)
+## Research Lab dashboard (Streamlit, multi-page)
 
 Local run:
 
 ```bash
-python train.py --data assistments --epochs 20 --save outputs/model_assistments.pt
+python train.py --data assistments --epochs 20 --hidden 200 \
+  --lr 0.003 --dropout 0.2 --save outputs/model_assistments.pt
+python compare.py                         # DKT vs BKT vs baselines -> outputs/comparison.json
 python export_demo.py                     # writes outputs/demo_bundle.json.gz (~36 KB)
 python -m streamlit run streamlit_app.py  # http://localhost:8501
 ```
 
-The simulator replays a held-out test student's real history step by step and
-shows the model's P(correct) vs the per-skill baseline, plus the model's
-current belief across all 56 skills.
+Pages (dark charcoal theme, teal accents, amber flags):
+
+| page | what it does |
+|---|---|
+| **Overview** | headline metrics, loss/ROC plots, 2-minute explanation |
+| **Model Comparison** | DKT, BKT (EM), per-skill baseline, random on the *same* 46,856 eligible pairs; AUC/acc/log-loss/Brier/ECE + reliability diagrams |
+| **Mastery Heatmap** | per student, per skill: model estimate vs observed accuracy with observation counts; skills with <5 observations flagged as thin evidence; drill-down into a skill's history |
+| **Prediction Autopsy** | one held-out prediction stress-tested: drop or flip each earlier interaction and watch the probability move; sensitive interactions flagged |
+| **Mastery Reality Check** | sequence-position proxy analysis (labelled as a proxy, not a retention study) + working CSV import path for delayed/transfer assessments |
+| **Dataset & Experiment Settings** | exact checkpoint settings, tuning result, dataset provenance and preprocessing counts, reproduction commands |
+
+Honest boundaries, per feature:
+
+- **BKT is implemented and compared** (per-skill EM HMM, see `bkt.py`); it is
+  a fair sequence-model comparison but has no cross-skill representation.
+- **SAKT** (self-attentive KT) and the **skill dependency graph** are
+  designated "later extensions" in the brief and are NOT implemented here —
+  no stubs pretending to work.
+- **Personal paper/exam upload and feedback (spec §7) is deliberately
+  excluded** by the owner's decision; the marking engine would require an
+  external LLM or OCR stack, so nothing half-working ships.
+- Model probabilities are **estimates of next-answer behaviour**, not
+  measurements of knowledge; heatmaps label model-estimated vs observed
+  numbers separately, and thin-evidence cells are flagged.
 
 ### Deploying free on Streamlit Community Cloud
 
 1. Create a public GitHub repository and push this project's files. Required:
-   `streamlit_app.py`, `requirements.txt`, `config.py`, `baseline.py`,
-   `evaluate.py`, `plots.py`, `tune.py`, `train.py`, `export_demo.py`,
-   `data/`, `model/`, `outputs/model_assistments.pt`,
-   `outputs/demo_bundle.json.gz`, `.streamlit/config.toml`.
+   `streamlit_app.py`, `app_common.py`, `app_pages/`, `requirements.txt`,
+   `config.py`, `baseline.py`, `evaluate.py`, `metrics.py`, `bkt.py`,
+   `autopsy.py`, `reality_check.py`, `compare.py`, `plots.py`, `tune.py`,
+   `train.py`, `export_demo.py`, `data/`, `model/`,
+   `outputs/model_assistments.pt`, `outputs/demo_bundle.json.gz`,
+   `outputs/comparison.json`, `outputs/bkt_params.json`,
+   `.streamlit/config.toml`.
    Do NOT push `data/raw/` (63 MB) or `.venv` — add them to `.gitignore`.
 2. Go to https://share.streamlit.io, sign in with the same GitHub account,
    "Add new app", pick the repo and set **Main file path** to
    `streamlit_app.py`.
 3. First deploy takes a few minutes (pip installs CPU torch). Free tier is
-   CPU-only; the 56-skill model loads in seconds and each replay step is one
-   forward pass.
+   CPU-only.
 
 ## Layout
 
@@ -174,8 +199,18 @@ data/synthetic.py  fake data with learnable recency dynamics
 data/assistments.py  real-data loader + preprocessing stats
 model/dkt.py       LSTM, masked BCE, prediction collection
 baseline.py        per-skill empirical rate (train data only)
+bkt.py             Bayesian Knowledge Tracing (EM, one HMM per skill)
+metrics.py         log loss, Brier, ECE, reliability binning
 evaluate.py        ROC-AUC / accuracy reporting
+compare.py         all models on identical pairs -> outputs/comparison.json
+autopsy.py         per-prediction drop/flip ablation analysis
+reality_check.py   position-proxy + delayed/transfer CSV import + validation
 plots.py           loss curve + ROC comparison -> outputs/
-train.py           end-to-end entry point
-tests/             shapes, masking, causality, leakage, baseline
+train.py           end-to-end entry point (records train_seconds in ckpt)
+tune.py            random-search hyperparameter tuning
+app_common.py      cached data/model access shared by pages
+app_pages/         the six dashboard pages
+tests/             shapes, masking, causality, leakage, baseline,
+                   metrics, BKT recovery, autopsy, reality check,
+                   headless render tests for every page
 ```
